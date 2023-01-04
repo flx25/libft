@@ -6,100 +6,89 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:57:02 by fvon-nag          #+#    #+#             */
-/*   Updated: 2022/12/20 15:20:17 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/01/04 11:10:55 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stdlib.h>
+#include <string.h>
 
-int	ft_strlen(const char *str)
+static int	findend(char const *s1, int *asciilist)
 {
 	int	i;
 
-	i = 0;
-	while (str[i] != '\0')
+	i = ft_strlen(s1) - 1;
+	while (i > 0)
 	{
-	i++;
+		if (asciilist[(int)s1[i]] > 0)
+			i--;
+		else
+			return (i);
 	}
 	return (i);
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	size_t			i;
-	unsigned char	*out;
-
-	if ((nmemb >= __SIZE_MAX__ && size >= __SIZE_MAX__))
-		return (NULL);
-	out = (unsigned char *) malloc(nmemb * size);
-	if (out == NULL)
-		return (NULL);
-	i = 0;
-	while (i < nmemb * size)
-	{
-		out[i] = 0;
-		i++;
-	}
-	return (out);
-}
-
-static char	*transfer(char const *s1, char *out, int startpoint, int endpoint)
+static void	setsetlength(char const *set, int *asciilist)
 {
 	int	i;
-	int	j;
+	int	setlength;
 
-	i = startpoint;
+	i = 0;
+	setlength = ft_strlen(set);
+	while (i < setlength)
+	{
+		asciilist[(int)set[i]]++;
+		i++;
+	}
+}
+
+static char	*copyandtrim(char const *s1, char *out, int *asciilist, int end)
+{
+	int		i;
+	int		j;
+
+	i = 0;
 	j = 0;
-	while (i < endpoint)
+	while (s1[i] != '\0')
+	{
+		if (asciilist[(int)s1[i]] > 0)
+			i++;
+		else
+			break ;
+	}
+	while (s1[i] != '\0' && i <= end)
 	{
 		out[j] = s1[i];
-		j++;
 		i++;
+		j++;
 	}
 	return (out);
 }
-
-static int	strnstrindex(const char	*haystack, const char *needle)
-{
-	size_t		i;
-	size_t		c;
-
-	i = 0;
-	while (haystack[i] != '\0')
-	{
-		c = 0;
-		while (haystack[i + c] != '\0' && haystack[i + c] == needle[c])
-		{
-			if (needle[c + 1] == '\0')
-				return ((int)i);
-			c++;
-		}
-		i++;
-	}
-	return (0);
-}
-
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*out;
-	int		setlength;
-	int		startpoint;
-	int		endpoint;
+	int		asciilist[255];
+	int		end;
+	int		start;
 
-	setlength = ft_strlen(set);
-	startpoint = strnstrindex(s1, set) + setlength;
-	if (strnstrindex(s1 + startpoint, set) == 0)
-		endpoint = ft_strlen(s1) - 1;
+	start = 0;
+	ft_memset(asciilist, 0, sizeof(asciilist));
+	setsetlength(set, asciilist);
+	while (s1[start] != '\0')
+	{
+		if (asciilist[(int)s1[start]] > 0)
+			start++;
+		else
+			break ;
+	}
+	end = findend(s1, asciilist);
+	if (end == 0)
+		out = (char *) ft_calloc(1, sizeof(char));
 	else
-		endpoint = strnstrindex(s1 + startpoint, set) + startpoint;
-
-	out = (char *)ft_calloc((ft_strlen(s1) + 1) - (endpoint - startpoint),
-			sizeof(char));
-	return (transfer(s1, out, startpoint, endpoint));
-}
-
-int main(void)
-{
-	ft_strtrim("abc aaeraeraer abc", "abc");
+		out = (char *) ft_calloc(end + 2 - start, sizeof(char));
+	if (out == NULL)
+		return (NULL);
+	return (copyandtrim(s1, out, asciilist, end));
 }
