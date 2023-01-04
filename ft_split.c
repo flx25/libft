@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 10:55:55 by fvon-nag          #+#    #+#             */
-/*   Updated: 2022/12/17 13:16:28 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/01/04 15:04:43 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	splitcount(char const *s, char c, int *countnc)
 	count = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] == c && (s[i + 1] != c && s[i + 1] != '\0'))
+		if ((i == 0 || s[i - 1] == c) && s[i] != c)
 			count++;
 		else if (s[i] != c && s[i + 1] != c)
 			(*countnc)++;
