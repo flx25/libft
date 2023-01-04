@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 10:43:21 by fvon-nag          #+#    #+#             */
-/*   Updated: 2022/12/21 12:36:13 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/01/04 15:55:14 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@
 void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
 	del(lst->content);
-	del(lst);
+	free(lst);
 }
