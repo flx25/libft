@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 11:48:40 by fvon-nag          #+#    #+#             */
-/*   Updated: 2022/12/20 15:34:48 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/01/05 10:44:24 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,86 +14,37 @@
 #include "libft.h"
 #include <limits.h>
 
-static int	countlength(int n)
+static void	writedigits(int n, int fd)
 {
-	int	length;
+	char	c;
 
-	length = 1;
-	if (n < 0)
+	if (n >= 10)
 	{
-		length++;
-		n *= -1;
+		writedigits(n / 10, fd);
+		c = n % 10 + '0';
+		write(fd, &c, 1);
 	}
-	while (n)
+	else
 	{
-		n /= 10;
-		length++;
+		c = n + '0';
+		write(fd, &c, 1);
 	}
-	return (length);
-}
-
-static void	transfer(char *out, int n, int isminus, int *isintmin)
-{
-	int	i;
-	int	length;
-
-	if (n == INT_MIN)
-	{
-		n = INT_MAX;
-		*isintmin = 1;
-	}
-	length = countlength(n);
-	i = length - 2 + isminus;
-	while (i >= 0)
-	{
-		out[i] = (n % 10) + '0';
-		n /= 10;
-		i--;
-	}
-}
-
-static void	extracases(int isminus, int iszero, int isintmin, char *out)
-{
-	if (isminus == 1)
-		out[0] = '-';
-	if (iszero == 1)
-		out[0] = '0';
-	if (isintmin == 1)
-		out[10] = '8';
-}
-
-static int	isminus_f(int n, int *isminus)
-{
-	if (n < 0)
-	{
-		*isminus = 1;
-		n *= -1;
-	}
-	return (n);
 }
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	int		length;
-	char	out[12];
-	int		isminus;
-	int		iszero;
-	int		isintmin;
+	char	minus;
 
-	iszero = 0;
-	while (iszero <= 12)
+	minus = '-';
+	if (n == -2147483648)
+		write(fd, "-2147483648", 11);
+	else if (n == 0)
+		write(fd, "0", 1);
+	else if (n < 0)
 	{
-		out[iszero] = '\0';
-		iszero++;
+		write(fd, &minus, 1);
+		writedigits(n * -1, fd);
 	}
-	iszero = 0;
-	isminus = 0;
-	isintmin = 0;
-	n = isminus_f(n, &isminus);
-	if (n == 0)
-		iszero = 1;
-	length = countlength(n);
-	transfer(out, n, isminus, &isintmin);
-	extracases(isminus, iszero, isintmin, out);
-	write(fd, out, length);
+	else
+		writedigits(n, fd);
 }
