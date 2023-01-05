@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 10:24:06 by fvon-nag          #+#    #+#             */
-/*   Updated: 2022/12/21 15:00:03 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/01/05 11:45:46 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-int			main(void);
 int			ft_strlen(const char *str);
 int			ft_tolower(int c);
 int			ft_toupper(int c);
