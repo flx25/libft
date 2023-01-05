@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 10:19:57 by fvon-nag          #+#    #+#             */
-/*   Updated: 2022/12/19 13:16:01 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/01/05 11:35:56 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ char	*ft_itoa(int n)
 	}
 	length = countlength(n);
 	out = ft_calloc(length + 1, sizeof(char));
+	if (out == NULL)
+		return (NULL);
 	transfer(out, n, length, isminus);
 	extracases(isminus, iszero, isintmin, out);
 	return (out);
