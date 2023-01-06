@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:15:51 by fvon-nag          #+#    #+#             */
-/*   Updated: 2022/12/20 09:55:57 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:49:40 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 		return (srclength);
 	if (size < dstlength)
 		return (size + srclength);
-	while (i < srclength + 1 && i + dstlength < size - 1)
+	while (i < srclength && i + dstlength < size - 1)
 	{
 		dst[dstlength + i] = src[i];
 		i++;
