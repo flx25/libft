@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 10:23:23 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/01/11 13:26:30 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/01/11 13:29:40 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_strlen(const char *str)
 
 	i = 0;
 	if (!str)
-		return (0);
+		return (0x0);
 	while (str[i] != '\0')
 	{
 	i++;
